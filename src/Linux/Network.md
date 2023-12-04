@@ -3,8 +3,9 @@
 Owner: Mojtaba Safaei
 Verification: Verified
 
-- **Check IP**
-    
+<details>
+    <summary>Check IP</summary>
+
     Different ways to check ip addresses:
     
     ```bash
@@ -20,11 +21,11 @@ Verification: Verified
     ```bash
     ~: networkctl status
     ```
-    
+</details>
 
-- **Default Gateway**
-    
-    
+<details>
+    <summary>Default Gateway</summary>
+
     **To check routes and DG:**
     
     ```bash
@@ -55,9 +56,10 @@ Verification: Verified
     ```bash
     sudo ip route del default via 192.168.1.1
     ```
-    
+</details>
 
-- **DNS**
+<details>
+    <summary>DNS</summary>
     
     **To check dns servers:**
     
@@ -78,9 +80,10 @@ Verification: Verified
     ```bash
     networkctl status
     ```
-    
+</details>
 
-- **DHCP**
+<details>
+    <summary>DHCP</summary>
     
     To Release current ip:
     
@@ -95,10 +98,10 @@ Verification: Verified
     ```
     
     If the nic already has an ip the above command will add new address to the nic, So if you want to renew you should first run the ***dhclient*** command with ***-r*** option.
-    
+</details> 
 
-- **Centos**
-    
+<details>
+    <summary>RHEL</summary>
     
     ***IP Address configuration:***
     
@@ -131,9 +134,10 @@ Verification: Verified
     # /etc/init.d/network restart [On SysVinit]
     
     # systemctl restart network [On SystemD]
-    
+</details>
 
-- **Static/Dynamic IP**
+<details>
+    <summary>Static/Dynamic IP</summary>
     
     In new version of ubuntu the netplan package and method is being used to manage networking.
     
@@ -170,8 +174,8 @@ Verification: Verified
     ```bash
     cat /etc/netplan/50-cloud-init.yaml
     ```
-    
-    - **DHCP Mode Example**
+    <details>
+    <>DHCP Mode Example<>
         
         ```bash
         sudo vim /etc/netplan/50-cloud-init.yaml
@@ -188,7 +192,7 @@ Verification: Verified
         ```bash
         sudo netplan apply
         ```
-        
+    </details>
     
     - **Static IP Example**
         
@@ -213,7 +217,7 @@ Verification: Verified
         ```bash
         sudo netplan apply
         ```
-        
+</details>
 
 - **networkd**
     
