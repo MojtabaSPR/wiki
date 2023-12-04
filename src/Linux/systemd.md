@@ -1,17 +1,14 @@
 # systemd
 
-Owner: Mojtaba Safaei
-Verification: Verified
-
 The systemd is made around **unit**s. A unit can be a service, a group of services, or an action. Units do have a name, a type, and a configuration file. There are 12 unit types: automount, device, mount, path, scope, service, slice, snapshot, socket, swap, target & timer.
 
 ```bash
-# systemctl list-units
-# systemctl list-units --type=service  # will show all services
-# systemctl list-units --type=target  # will show all targets
-# systemctl get-default   #default target (groups of services are started via target unit files)
-# systemctl cat ntpd.service
-# systemctl daemon-reload sshd # re-reads the configuration of the systemd configs of this service
+ ~: systemctl list-units
+ ~: systemctl list-units --type=service  # will show all services
+ ~: systemctl list-units --type=target  # will show all targets
+ ~: systemctl get-default   #default target (groups of services are started via target unit files)
+ ~: systemctl cat ntpd.service
+ ~: systemctl daemon-reload sshd # re-reads the configuration of the systemd configs of this service
 
 ```
 
@@ -33,7 +30,7 @@ You can find the scripts files in `/etc/init.d` and runlevels in `/etc/rc[0-6
 And start/stop on runlevels are controlled from these directories: `/etc/rc[0-6].d`
 
 ```bash
-user@vm:~$ ls -lthr /etc/rc3.d/
+ ~: ls -lthr /etc/rc3.d/
 total 0
 lrwxrwxrwx 1 root root 14 Apr 28  2023 S01dbus -> ../init.d/dbus
 lrwxrwxrwx 1 root root 14 Apr 28  2023 S01cron -> ../init.d/cron
@@ -55,8 +52,10 @@ lrwxrwxrwx 1 root root 26 May  2  2023 S01qemu-guest-agent -> ../init.d/qemu-gue
 lrwxrwxrwx 1 root root 21 May  2  2023 S01grub-common -> ../init.d/grub-common
 ```
 
-**Targets (Runlevel):**
+<br/>
+<br/>
 
+**Targets (Runlevel):**
 | SysV runlevel | systemd target | Purpose |
 | --- | --- | --- |
 | 0 | runlevel0.target, halt.target, poweroff.target | System shutdown |
@@ -67,8 +66,10 @@ lrwxrwxrwx 1 root root 21 May  2  2023 S01grub-common -> ../init.d/grub-common
 | 5 | runlevel5.target, graphical.target, | Full multiuser with network and display manager |
 | 6 | runlevel6.target, reboot.target, | System reboot |
 
-**Commands to change targets:**
+<br/>
+<br/>
 
+**Commands to change targets:**
 | Task | systemd Command | System V init Command |
 | --- | --- | --- |
 | Change the current target/runlevel | systemctl isolate TARGET-NAME.target | telinit X |
@@ -86,8 +87,10 @@ systemd.unit= TARGET-NAME.target | Enter the desired runlevel number at the boo
 | Show a target's/runlevel's dependencies | systemctl show -p "Requires" TARGET-NAME.target
 systemctl show -p "Wants" TARGET-NAME.target | n/a |
 
+<br/>
+
 ```bash
-user@vm:~$ systemctl cat multi-user.target
+ ~: systemctl cat multi-user.target
 # /lib/systemd/system/multi-user.target
 #  SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -108,27 +111,27 @@ AllowIsolate=yes
 ```
 
 ```bash
-user@vm:~$ systemctl show --property="Wants" rescue.target | xargs echo
+ ~: systemctl show --property="Wants" rescue.target | xargs echo
 Wants=grub-initrd-fallback.service systemd-update-utmp-runlevel.service
 ```
 
 ```bash
-user@vm:~$ systemctl show --property="Requires" rescue.target | xargs echo
+ ~: systemctl show --property="Requires" rescue.target | xargs echo
 Requires=rescue.service sysinit.target
 ```
 
 ```bash
-switch to multi-user target
-user@vm:~$ systemctl isolate multi-user.target
+ # switch to multi-user target
+ ~: systemctl isolate multi-user.target
 
-switch to graphical target
-user@vm:~$ systemctl isolate graphical.target
+ # switch to graphical target
+ ~: systemctl isolate graphical.target
 ```
 
 Find and read a service file:
 
 ```bash
-user@vm:~$ systemctl cat sshd.service
+ ~: systemctl cat sshd.service
 # /lib/systemd/system/ssh.service
 [Unit]
 Description=OpenBSD Secure Shell server
@@ -157,11 +160,11 @@ Alias=sshd.service
 **Journaling**
 
 ```
-# journalctl # show all journal
-# journalctl --no-pager # do not use less
-# journalctl -n 10 # only 10 lines
-# journalctl -S -1d # last 1 day
-# journalctl -xe # last few logs
-# journalctl -u ntp # only ntp unit
-# journalctl _PID=1234
+ ~: journalctl # show all journal
+ ~: journalctl --no-pager # do not use less
+ ~: journalctl -n 10 # only 10 lines
+ ~: journalctl -S -1d # last 1 day
+ ~: journalctl -xe # last few logs
+ ~: journalctl -u ntp # only ntp unit
+ ~: journalctl _PID=1234
 ```

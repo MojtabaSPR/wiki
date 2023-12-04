@@ -1,14 +1,8 @@
 # Git
 
-Owner: Mojtaba Safaei
-Verification: Verified
-
-- Branch
+- Concepts
     
-    
-    - Concepts
-        
-        # Git Branch
+    - Branch
         
         Branching is a feature available in most modern version control systems. Branching in other VCS's can be an expensive operation in both time and disk space. In Git, branches are a part of your everyday development process. Git branches are effectively a pointer to a snapshot of your changes. When you want to add a new feature or fix a bug—no matter how big or how small—you spawn a new branch to encapsulate your changes. This makes it harder for unstable code to get merged into the main code base, and it gives you the chance to clean up your future's history before merging it into the main branch.
         
@@ -20,7 +14,7 @@ Verification: Verified
         
         As you read, remember that Git branches aren't like SVN branches. Whereas SVN branches are only used to capture the occasional large-scale development effort, Git branches are an integral part of your everyday workflow. The following content will expand on the internal Git branching architecture.
         
-        # How it works
+        **How it works**
         
         A branch represents an independent line of development. Branches serve as an abstraction for the edit/stage/commit process. You can think of them as a way to request a brand new working directory, staging area, and project history. New commits are recorded in the history for the current branch, which results in a fork in the history of the project.
         
@@ -38,175 +32,176 @@ Verification: Verified
         
          کنیم.
         
-    - Commands
-        
-        
+    - Pull/Fetch/Push
+
+        - Pull vs Fetch
+
+            When downloading content from a remote repo, git pull and git fetch commands are available to accomplish the task. You can consider git fetch the 'safe' version of the two commands. It will download the remote content but not update your local repo's working state, leaving your current work intact. git pull is the more aggressive alternative, it will download the remote content for the active local branch and immediately execute git merge to create a merge commit for the new remote content. If you have pending changes in progress this will cause conflicts and kickoff the merge conflict resolution flow.
+
+    
+
+- ***Commands***
+
+    - **General**
+        To start working with git:
         ```bash
-        git branch
-        
-        ll  .git/refs/heads/
+        ~: git init
+        ```
+        *This command will make a git repository in current directory and save data in a .git hidden directory*
+
+        To Remove git repo from current dir:
+        ```bash
+        ~: rm -r -d  .git
         ```
         
+        View git current directory content:
+        ```bash
+        ~: ls  -Lthra
+        ```
+
+        View overall status:
+        ```bash
+        ~: git status
+        ```
+        
+        this command will show all untracked and staged files
+        
+        To add a changed file mode to staging mode:
+
+        ```bash
+        ~: git add filename
+        ```
+
+        will add all of  files:
+        ```bash
+        ~: git add -A   
+        ```
+        
+        To commit staged files:
+        ```bash
+        ~: git commit -m "comment"   filename
+        ```
+        
+        To check changed file's changes:
+        ```bash
+        ~: git diff  
+        ```
+        
+        To exit a file from staged mode to untracked mode:
+        ```bash
+        ~: git reset   filename
+        ```
+        
+        To revert a changed file's content to the last committed content:
+        ```bash
+        ~: git checkout   —filename
+        ```
+        
+        Check a specific commit:
+        ```bash
+        ~: git show  commit-id
+        ```
+        
+
+    - **Branch**
+
         List all of the branches in your repository. This is synonymous with `git branch --list.`
-        
         ```bash
-        git branch <branch>
+        ~: git branch
+        
+        ~: ll .git/refs/heads/
         ```
+        
         
         Create a new branch called `<branch>`. This does *not* check out the new branch.
-        
         ```bash
-        git branch -d <branch>
+        ~: git branch <branch>
         ```
         
         Delete the specified branch. This is a “safe” operation in that Git prevents you from deleting the branch if it has unmerged changes.
-        
         ```bash
-        git branch -D <branch>
+        ~: git branch -d <branch>
         ```
         
         Force delete the specified branch, even if it has unmerged changes. This is the command to use if you want to permanently throw away all of the commits associated with a particular line of development.
-        
         ```bash
-        git branch -m <branch>
+        ~: git branch -D <branch>
         ```
+        
         
         Rename the current branch to `<branch>`.
-        
         ```bash
-        git branch -a
+        ~: git branch -m <branch>
         ```
+        
         
         List all remote branches.
-        
         ```bash
-        git branch -r
+        ~: git branch -a
         ```
         
+        
         List all remote repo branches.
-        
-- Commands
+        ```bash
+        ~: git branch -r
+        ```
+  
     
-    
-    **To start working with git:**
-    
-    # git init
-    
-    *This command will make a git repository in current directory and save data in a .git hidden directory*
-    
-    **To Remove git repo from current dir:**
-    
-    #rm -r -d  .git
-    
-    **View git current directory content:**
-    
-    #ls  -Lthra
-    
-    **View overall status:**
-    
-    #git status
-    
-    this command will show all untracked and staged files
-    
-    **To add a changed file mode to staging mode:**
-    
-    #git add filename
-    
-    will add all of  files:
-    
-    #git add    -A      
-    
-    **To commit staged files:**
-    
-    #git commit -m "comment"   filename
-    
-    **To check changed file's changes:**
-    
-    #git diff  
-    
-    **To exit a file from staged mode to untracked mode:**
-    
-    #git reset   filename
-    
-    **To revert a changed file's content to the last committed content:**
-    
-    #git checkout   —filename
-    
-    **Check a specific commit:**
-    
-    git show  commit-id
-    
-- Tag
-    
-    
-- Remote Repo
-    
-    
-    - Clone a remote project and edit
-        
-        
-        **To pull or clone a project from a remote repo:**
-        
-        #git clone [https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git)
-        
-        #cd git
-        
-        **To check current remote repo:**
-        
-        #git remote -v
-        
+    - **Remote Repo**
+
+        To pull or clone a project from a remote repo:
+        ```bash
+        ~: git clone [https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git)
+        ```
+
+        To check current remote repo:
+        ```bash
+        ~: git remote -v
+        ```
         خروجی دستور بالا :
-        
+        ```bash
         origin	[https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git) (fetch)
         origin	[https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git) (push)
-        
-        **MAKE YOUR CHANGES:**
-        
-        #git add  -A
-        
-        #git commit -m "comment"    filename
-        
-        **To Push your changes to remote (github):**
-        
-        #git push -u origin master
-        
-        **To Pull new changes that other people have made on the project:**
-        
-        #git pull origin master
-        
-        کلمه اوریجین درواقع به همان منبع اصلی پروژه که در اینجا روی گیت هاب است اشاره می کند. مستر هم که برنچ اصلی خودمان است.
-        
-    - Add remote manually
+        ```
         
         
-        #git remote add origin [https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git)
-        
-        #git remote -v
-        
-    - more
-        
-        Inspect a remote repo:
-        
+        MAKE YOUR CHANGES:
         ```bash
-        git remote show repo1
+        ~: git add  -A
+        ~: git commit -m "comment"    filename
+        ```
+        
+        To Push your changes to remote (github):
+        ```bash
+        ~: git push -u origin master
+        ```
+        
+        To Pull new changes that other people have made on the project:
+        ```bash
+        ~: git pull origin master
+        ```
+        کلمه اوریجین درواقع به همان منبع اصلی پروژه که در اینجا روی گیت هاب است اشاره می کند. مستر هم که برنچ اصلی خودمان است.
+            
+        Add remote manually
+        ```bash
+        ~: git remote add origin [https://github.com/MojtabaSafa/git.git](https://github.com/MojtabaSafa/git.git)
+        ~: git remote -v
+        ```
+
+        Inspect a remote repo:        
+        ```bash
+        ~: git remote show repo1
         ```
         
         Renaming and Removing Remotes:
-        
         ```bash
-        git remote rename <old-name> <new-name>
+        ~: git remote rename <old-name> <new-name>
         
-        git remote rm repo-name
+        ~: git remote rm repo-name
         ```
         
         List remote repository branches:
-        
         ```bash
-        git  branch  -r
+        ~: git  branch  -r
         ```
-        
-    - Pull/Fetch/Push
-        
-        **Pull vs Fetch:**
-        
-        When downloading content from a remote repo, git pull and git fetch commands are available to accomplish the task. You can consider git fetch the 'safe' version of the two commands. It will download the remote content but not update your local repo's working state, leaving your current work intact. git pull is the more aggressive alternative, it will download the remote content for the active local branch and immediately execute git merge to create a merge commit for the new remote content. If you have pending changes in progress this will cause conflicts and kickoff the merge conflict resolution flow.
+            

@@ -1,7 +1,5 @@
 # Firewall
 
-Owner: Mojtaba Safaei
-Verification: Verified
 
 - IPtables
     

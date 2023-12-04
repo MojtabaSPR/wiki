@@ -1,8 +1,5 @@
 # Linux
 
-Owner: Mojtaba Safaei
-Verification: Verified
-
 [systemd](Linux/systemd.md)
 
 [Storage](Linux/Storage.md)

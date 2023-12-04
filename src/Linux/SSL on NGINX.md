@@ -1,7 +1,5 @@
 # SSL on NGINX
 
-Owner: Mojtaba Safaei
-Verification: Verified
 
 **First, add the repository:**
 
