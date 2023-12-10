@@ -157,9 +157,9 @@ WantedBy=multi-user.target
 Alias=sshd.service
 ```
 
-**Journaling**
+**Journaling:**
 
-```
+```bash
  ~: journalctl # show all journal
  ~: journalctl --no-pager # do not use less
  ~: journalctl -n 10 # only 10 lines

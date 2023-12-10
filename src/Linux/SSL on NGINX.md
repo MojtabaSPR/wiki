@@ -1,6 +1,5 @@
 # SSL on NGINX
 
-
 **First, add the repository:**
 
 ```bash
