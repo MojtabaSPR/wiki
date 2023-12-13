@@ -72,20 +72,12 @@ lrwxrwxrwx 1 root root 21 May  2  2023 S01grub-common -> ../init.d/grub-common
 **Commands to change targets:**
 | Task | systemd Command | System V init Command |
 | --- | --- | --- |
-| Change the current target/runlevel | systemctl isolate TARGET-NAME.target | telinit X |
-| Change to the default target/runlevel | systemctl default | n/a |
-| Get the current target/runlevel | systemctl list-units --type=target
-With systemd there is usually more than one active target. The command lists all currently active targets. | who -r
-or
-runlevel |
-| persistently change the default runlevel | Use the Services Manager or run the following command:
-ln -sf /usr/lib/systemd/system/ TARGET-NAME.target /etc/systemd/system/default.target | Use the Services Manager or change the line
-id: X:initdefault:
-in /etc/inittab |
-| Change the default runlevel for the current boot process | Enter the following option at the boot prompt
-systemd.unit= TARGET-NAME.target | Enter the desired runlevel number at the boot prompt. |
-| Show a target's/runlevel's dependencies | systemctl show -p "Requires" TARGET-NAME.target
-systemctl show -p "Wants" TARGET-NAME.target | n/a |
+| Change the current target/runlevel | **systemctl isolate TARGET-NAME.target** | **telinit X** |
+| Change to the default target/runlevel | **systemctl default** | n/a |
+| Get the current target/runlevel | **systemctl list-units --type=target** With systemd there is usually more than one active target. The command lists all currently active targets. | **who -r** or **runlevel** |
+| Persistently change the default runlevel | Use the Services Manager or run the following command: **ln -sf /usr/lib/systemd/system/ TARGET-NAME.target /etc/systemd/system/default.target** | Use the Services Manager or change the line **id: X:initdefault:** in /etc/inittab |
+| Change the default runlevel for the current boot process | Enter the following option at the boot prompt **systemd.unit= TARGET-NAME.target** | Enter the desired runlevel number at the boot prompt. |
+| Show a target's/runlevel's dependencies | **systemctl show -p "Requires" TARGET-NAME.target** , **systemctl show -p "Wants" TARGET-NAME.target** | n/a |
 
 <br/>
 

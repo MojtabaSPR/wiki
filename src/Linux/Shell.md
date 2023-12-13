@@ -157,7 +157,7 @@ export Name=Mojtaba
 
 ```bash
 ~: vim /etc/environment
-export Name=Mojtaba
+Name=Mojtaba
 ```
 
 ## Source
