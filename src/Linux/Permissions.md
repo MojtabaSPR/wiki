@@ -9,8 +9,6 @@ drwxr-xr-x 2 mojtaba mojtaba      4096 Jul 19 12:13 build
 drwxr-xr-x 3 mojtaba mojtaba      4096 May 11  2023 test.py
 ```
 
-![Alt text](image.png)
-
 The below table shows some more information regarding the first part of the ls -l command:
 
 | Position | Meaning |

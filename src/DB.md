@@ -1,6 +1,7 @@
 # DB
-    
+
 - Postgres Dump
+
 ```bash
     # change user to postgres:
     ~: sudo su - postgres
@@ -12,8 +13,8 @@
     ~: pigz -9 -p 4 filename
 ```
 
-    
 - Mysql Dump K8S
+
 ```bash
     # Login into the pod   
     ~: kubectl exec -it <pod> -n <namespace> -- /bin/bash
