@@ -12,7 +12,16 @@
  
 <br>
 
-```basd
+Toleration has 5 fields:
+
+- <code>key</code>: The taint key to match.
+- <code>operator</code>: The operator to use for matching. Can be <code>Equal</code> or <code>Exists</code>.
+- <code>value</code>: The value of the taint to match. This is optional.
+- <code>effect</code>: The effect to take when a pod is scheduled on a node with matching taints. Can be <code>NoSchedule</code>, <code>PreferNoSchedule</code>, or <code>NoExecute</code>.
+- <code>tolerationSeconds</code>: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+
+
+```shell
 # Add a taint to a node
 kubectl taint nodes node1 colour=blue:NoSchedule
 
@@ -92,11 +101,30 @@ When certain events occur on a node, the node-controller adds or removes some ta
 The scheduler checks taint (not node condition) when it makes scheduling decisions,
 so node-controller or kubelet based on node conditions set different taints on nodes.
 
-### <code>tolerationSeconds</code> 
+### Default <code>tolerations</code> and <code>tolerationSeconds</code> 
 
 - By default, kubernetes add two tolerations to pods: <code>node.kubernetes.io/not-ready</code> and <code>node.kubernetes.io/unreachable</code> with <code>NoExecute</code> effect.
 These tolerations have a <code>tolerationSeconds</code> field set to 300 seconds.
 This means that if a node is not ready or unreachable for 5 minutes, the pods on that node will be evicted.
+ 
+```shell
+mojtaba@lab-km1:~$ kubectl get pod pod2 -o jsonpath='{.spec.tolerations}' | json_pp
+[
+   {
+      "effect" : "NoExecute",
+      "key" : "node.kubernetes.io/not-ready",
+      "operator" : "Exists",
+      "tolerationSeconds" : 300
+   },
+   {
+      "effect" : "NoExecute",
+      "key" : "node.kubernetes.io/unreachable",
+      "operator" : "Exists",
+      "tolerationSeconds" : 300
+   }
+]
+``` 
+
 - You can override this behavior by setting a different value for <code>tolerationSeconds</code> in the pod's tolerations.
 For example, you might want to keep an application with a lot of local state bound to node for a long time in the event of network partition, hoping that the partition will recover and thus the pod eviction can be avoided. The toleration you set for that Pod might look like:
 ```yaml
@@ -116,3 +144,11 @@ DaemonSet pods are created with <code>NoExecute</code> tolerations for the follo
 - <code>node.kubernetes.io/not-ready</code>
 
 This ensures that DaemonSet pods are never evicted due to these problems.
+
+The DaemonSet controller also automatically adds the following NoSchedule tolerations to all daemons, to prevent DaemonSets from breaking.
+
+- <code>node.kubernetes.io/memory-pressure</code>
+- <code>node.kubernetes.io/disk-pressure</code>
+- <code>node.kubernetes.io/pid-pressure</code> (1.14 or later)
+- <code>node.kubernetes.io/unschedulable</code> (1.10 or later)
+- <code>node.kubernetes.io/network-unavailable</code> (host network only)

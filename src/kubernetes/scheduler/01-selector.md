@@ -169,7 +169,7 @@ spec:
 
 ---
 
-> **Node affinity weight**
+#### Node affinity weight
 > 1. You can specify a weight between 1 and 100 for each instance of the preferredDuringSchedulingIgnoredDuringExecution affinity type.
 > 2. The scheduler finds nodes that meet all the other scheduling requirements of the Pod
 > 3. Then iterates through every preferred rule that the node satisfies and adds the value of the weight for that expression to a sum
