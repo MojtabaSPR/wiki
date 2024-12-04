@@ -29,6 +29,10 @@ spec:
 3. If no node matches the labels, the pod will remain in the `Pending` state until a node with the specified labels is created.
 4. If the `NodeSelector` field is not set, the scheduler will use the default scheduling algorithm to select a node for the pod.
 
+```bash
+kubectl label nodes node1 disktype=ssd
+```
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -62,6 +66,10 @@ spec:
 1. **requiredDuringSchedulingIgnoredDuringExecution**: The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.
 2. **preferredDuringSchedulingIgnoredDuringExecution**: The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
 
+```bash
+kubectl label nodes node1 disktype=ssd
+```
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -83,11 +91,17 @@ spec:
     imagePullPolicy: IfNotPresent
 ```
 
-<br>
+---
+
 
 > **OR** <br> 
 > If you specify multiple terms in nodeSelectorTerms associated with nodeAffinity types,
 > then the Pod can be scheduled onto a node if one of the specified terms can be satisfied (terms are ORed).
+
+```bash
+kubectl label nodes node1 disktype=ssd
+kubectl label nodes node2 zone=asia
+```
 
 ```yaml
 # the pod can be scheduled onto a node with either disktype=ssd or zone=asia
@@ -115,10 +129,16 @@ spec:
     image: nginx
     imagePullPolicy: IfNotPresent
 ```
+---
 
 > **AND** <br> 
 > If you specify multiple expressions in a single matchExpressions field associated with a term in nodeSelectorTerms,
 > then the Pod can be scheduled onto a node only if all the expressions are satisfied (expressions are ANDed).
+
+```bash
+kubectl label nodes node1 disktype=ssd
+kubectl label nodes node1 zone=asia
+```
 
 ```yaml
 # the pod can be scheduled onto a node only if both disktype=ssd and zone=asia are satisfied
@@ -147,12 +167,23 @@ spec:
           imagePullPolicy: IfNotPresent
 ```
 
+---
+
 > **Node affinity weight**
 > 1. You can specify a weight between 1 and 100 for each instance of the preferredDuringSchedulingIgnoredDuringExecution affinity type.
 > 2. The scheduler finds nodes that meet all the other scheduling requirements of the Pod
 > 3. Then iterates through every preferred rule that the node satisfies and adds the value of the weight for that expression to a sum
 > 4. The final sum is added to the score of other priority functions for the node
 > 5. The node with the highest score is selected for the Pod
+
+```bash
+kubectl label nodes node1 kubernetes.io/os=linux
+kubectl label nodes node2 kubernetes.io/os=linux
+kubectl label nodes node3 kubernetes.io/os=linux
+
+kubectl label nodes node1 label-1=key-1
+kubectl label nodes node2 label-2=key-2
+```
 
 ```yaml
 apiVersion: v1
@@ -189,7 +220,10 @@ spec:
     image: registry.k8s.io/pause:2.0
 
 ```
-If there are two possible nodes that match the <code> <i>preferredDuringSchedulingIgnoredDuringExecution</i> </code> rule,
-one with the label-1:key-1 label and another with the label-2:key-2 label,
-the scheduler considers the weight of each node and adds the weight to the other scores for that node,
+
+
+>1. In above example, three nodes match the <code> <i>requiredDuringSchedulingIgnoredDuringExecution</i> </code> rule: **node1**, **node2**, **node3**.
+>2. **node1** and **node2** match the <code> <i>preferredDuringSchedulingIgnoredDuringExecution</i> </code> rule,
+one with the label-1:key-1 label and another with the label-2:key-2 label, so they are selected for next step.
+>3. Then the scheduler considers the weight of each node(node1 and node2) and adds the weight to the other scores for that node,
 and schedules the Pod onto the node with the highest final score.
